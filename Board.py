@@ -13,7 +13,6 @@ class Board:
         self.white_texture, self.black_texture, self.full_texture = None, None, None
         self.tile_locations_set = False
         self.tiles = list()
-        self.load_textures()
         self.create_tiles()
         self.pick_starting_randoms()
 
@@ -33,19 +32,13 @@ class Board:
         for row in range(0, DIMENSIONS):
             for col in range(0, DIMENSIONS):
                 if self.tiles[row][col].occupied:
-                    texture = self.white_texture
+                    pygame.draw.rect(self.screen, (255, 255, 255), (col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE))
                 else:
-                    texture = self.black_texture
-                self.screen.blit(texture, (col * TILE_SIZE, row * TILE_SIZE))
+                    pygame.draw.rect(self.screen, (0, 0, 0), (col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE))
                 if not self.tile_locations_set:
                     self.tiles[row][col].rect = pygame.Rect(col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE)
                     self.tiles[row][col].row = row
                     self.tiles[row][col].col = col
-
-    def load_textures(self): # Loads texture file, creates white cell and black cell textures at dim(TILE_SIZE, TILE_SIZE)
-        self.full_texture = pygame.image.load(TEXTURE_FILE).convert()
-        self.black_texture = pygame.transform.scale(self.full_texture.subsurface(0, 0, 16, 16).convert(), (TILE_SIZE, TILE_SIZE))
-        self.white_texture = pygame.transform.scale(self.full_texture.subsurface(16, 0, 16, 16).convert(), (TILE_SIZE, TILE_SIZE))
 
     def check_gen(self):  # Decides the state of each tile for the next iteration
         temp_list = list()
