@@ -1,7 +1,9 @@
 import sys
+
 from pygame.locals import *
-from Board import *
-from constants import *
+
+from game.Board import *
+from game.constants import *
 
 
 class Main:

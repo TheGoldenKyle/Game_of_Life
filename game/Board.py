@@ -1,8 +1,10 @@
-import pygame
-from constants import *
-from Tile import *
 from random import *
 from threading import Thread
+
+import pygame
+
+from game.Tile import *
+from game.constants import *
 
 
 class Board:
@@ -68,7 +70,7 @@ class Board:
         self.tiles = temp_list
 
     def check_neighbors(self):
-        split_tiles_list = self.chunks(self.tiles, THREADS) # Split board into individual chunks for multithreading
+        split_tiles_list = self.chunks(self.tiles, THREADS)
         for i in range(0, THREADS):
             thread = Thread(target=self.check_neighbors_from_list, args=(self.tiles, split_tiles_list[i]))
             thread.start()
